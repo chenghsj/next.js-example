@@ -36,6 +36,13 @@ function post({ post, comments }) {
           </Card>
         </Grid>
       ))}
+      <style jsx>
+        {`
+          h1 {
+            width: 100%;
+          }
+        `}
+      </style>
     </Grid>
   );
 }
