@@ -16,6 +16,9 @@ const index = ({ posts }) => {
       ))}
       <style jsx>
         {`
+          h1 {
+            width: 100%;
+          }
           li {
             list-style: none;
             margin-bottom: 1em;
