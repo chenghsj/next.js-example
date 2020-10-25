@@ -116,8 +116,10 @@ export default function CustomPaginationActionsTable({ posts }) {
 
   useEffect(() => {
     let id = router.components["/post/[postId]"]?.props.pageProps.post.id;
-    let page = Math.floor((id - 1) / rowsPerPage);
-    setPage(page);
+    if (id) {
+      let page = Math.floor((id - 1) / rowsPerPage);
+      setPage(page);
+    }
   }, []);
 
   const emptyRows =
