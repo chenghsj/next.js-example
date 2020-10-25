@@ -52,11 +52,12 @@ export async function getStaticProps(ctx) {
   const postRes = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${ctx.params.postId}`
   );
-  const post = await postRes.json();
   const commentRes = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${ctx.params.postId}/comments`
   );
+  const post = await postRes.json();
   const comments = await commentRes.json();
+
   return {
     props: {
       post,
@@ -66,10 +67,12 @@ export async function getStaticProps(ctx) {
   };
 }
 export async function getStaticPaths() {
+  let paths = new Array(30)
+    .fill(null)
+    .map((_, index) => ({ params: { postId: `${index + 1}` } }));
+
   return {
-    paths: new Array(30)
-      .fill(null)
-      .map((_, index) => ({ params: { postId: `${index + 1}` } })),
+    paths,
     fallback: true,
   };
 }
