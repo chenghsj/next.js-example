@@ -6,24 +6,39 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
+  },
+  iconButtonRoot: {
+    padding: "7px",
+    marginRight: "0.5rem",
   },
 });
 
 function post({ post, comments }) {
   const classes = useStyles();
   const router = useRouter();
-
+  console.log(router);
   if (router.isFallback) return <div>Loading...</div>;
 
   return !router.isFallback && Object.keys(post)?.length === 0 ? (
     <div>Page is not found</div>
   ) : (
     <Grid container className={classes.root} spacing={2}>
-      <h1>{post?.title}</h1>
+      <h1>
+        <IconButton
+          aria-label="go back"
+          classes={{ root: classes.iconButtonRoot }}
+          onClick={() => router.push("/")}
+        >
+          <KeyboardArrowLeftIcon />
+        </IconButton>
+        {post?.title}
+      </h1>
       {comments?.map((comment) => (
         <Grid key={comment.id} item xs={6} md={4}>
           <Card>
@@ -40,6 +55,7 @@ function post({ post, comments }) {
         {`
           h1 {
             width: 100%;
+            display: inline-block;
           }
         `}
       </style>
