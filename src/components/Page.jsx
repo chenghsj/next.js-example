@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,6 +16,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 import Link from "next/link";
 
@@ -85,21 +88,37 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
 const useStyles2 = makeStyles({
   table: {
     minWidth: 500,
   },
+  buttonBase: {
+    width: "100%",
+    padding: "16px",
+    justifyContent: "flex-start",
+  },
+  tableCell: {
+    width: "100%",
+    cursor: "pointer",
+    padding: 0,
+    transition: "all 0.3s",
+    "&:hover": {
+      background: "#e5e5e5",
+    },
+  },
 });
 
 export default function CustomPaginationActionsTable({ posts }) {
+  const router = useRouter();
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  // console.log(posts);
+
+  useEffect(() => {
+    let id = router.components["/post/[postId]"]?.props.pageProps.post.id;
+    let page = Math.floor((id - 1) / rowsPerPage);
+    setPage(page);
+  }, []);
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, posts.length - page * rowsPerPage);
@@ -122,16 +141,23 @@ export default function CustomPaginationActionsTable({ posts }) {
             : posts
           ).map((post) => (
             <TableRow key={post.id}>
-              <TableCell component="th" scope="row">
-                <Link href="/post/[postId]" as={`/post/${post.id}`}>
-                  <a>
-                    <span>
-                      <strong>{post.id}.&ensp;</strong>
-                    </span>
-                    {post.title}
-                  </a>
-                </Link>
-              </TableCell>
+              <Link href="/post/[postId]" as={`/post/${post.id}`}>
+                <TableCell
+                  className={classes.tableCell}
+                  component="th"
+                  scope="row"
+                >
+                  {" "}
+                  <ButtonBase className={classes.buttonBase}>
+                    <a onClick={() => setPage(page)}>
+                      <span>
+                        <strong>{post.id}.&ensp;</strong>
+                      </span>
+                      {post.title}
+                    </a>
+                  </ButtonBase>
+                </TableCell>
+              </Link>
             </TableRow>
           ))}
 

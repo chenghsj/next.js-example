@@ -9,17 +9,6 @@ const index = ({ posts }) => {
   return (
     <div>
       <h1>Jsonplaceholder</h1>
-      {/* {posts.map((post, index) => {
-        // const min = currentPageNum * 5;
-        // const max = (currentPageNum + 1) * 5;
-        return (
-          <li key={post.id}>
-            <Link href="/post/[postId]" as={`/post/${post.id}`}>
-              <a>{post.title}</a>
-            </Link>
-          </li>
-        );
-      })} */}
       <Page posts={posts} />
     </div>
   );

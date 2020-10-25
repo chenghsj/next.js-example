@@ -7,7 +7,8 @@
     "dev": "next dev -p 3030",
     "build": "next build",
     "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "NODE_OPTIONS='--inspect' next dev"
   },
   "keywords": [],
   "author": "",

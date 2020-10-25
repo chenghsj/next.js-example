@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 function post({ post, comments }) {
   const classes = useStyles();
   const router = useRouter();
-  console.log(router);
+  // console.log(router);
   if (router.isFallback) return <div>Loading...</div>;
 
   return !router.isFallback && Object.keys(post)?.length === 0 ? (
